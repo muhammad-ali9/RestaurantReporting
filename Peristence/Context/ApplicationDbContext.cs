@@ -50,7 +50,7 @@ namespace Peristence.Context
                     Id = 1,
                     FirstName = "Muhammad",
                     LastName = "Ali",
-                    Password = "SuperAdmin@123",
+                    Password = BCrypt.Net.BCrypt.HashPassword("SuperAdmin@123"),
                     Email = "superadmin@gmail.com"
                 }
                 );
