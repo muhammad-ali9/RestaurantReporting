@@ -13,5 +13,6 @@ namespace Application.Interfaces.Context
         DbSet<Users> Users { get; set; }
         DbSet<UserRoles> UserRoles { get; set; }
         DbSet<Roles> Roles { get; set; }
+        Task<int> SaveChangesAsync();
     }
 }

@@ -2,9 +2,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Exceptions;
 using Application.Interfaces.Authentication;
 using Application.Interfaces.Context;
+using Application.Response;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -30,11 +34,11 @@ namespace Infrastructure.Authentication
 
             if (userExists == null)
             {
-                throw new Exception($"User Not Found with Email {request.Email}");
+                throw new ApiExceptions($"User Not Found with Email {request.Email}");
             }
             if(!BCrypt.Net.BCrypt.Verify(request.Password, userExists.Password))
             {
-                throw new Exception("Password is Incorrect");
+                throw new ApiExceptions("Password is Incorrect");
             }
 
             JwtSecurityToken jwtToken = await GenerateToken(userExists);
@@ -49,6 +53,32 @@ namespace Infrastructure.Authentication
             return response;
         }
 
+        public async Task<ApiResponse<string>> Register(RegisterRequest request)
+        {
+            var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email);
+
+            if (!userExists)
+            {
+                throw new ApiExceptions($"User with {request.Email} already exists");
+            }
+
+            return new ApiResponse<string>("Suucess");
+        }
+        public async Task<ApiResponse<string>> AddRoles(string roleName)
+        {
+            var roleExists = await _context.Roles.AnyAsync(r => r.RoleName == roleName);
+            if (roleExists)
+            {
+                throw new ApiExceptions($"Role {roleName} already exists");
+            }
+            var newRole = new Roles
+            {
+                RoleName = roleName
+            };
+            await _context.Roles.AddAsync(newRole);
+            await _context.SaveChangesAsync();
+            return new ApiResponse<string>("Role Added Successfully");
+        }
         private async Task<JwtSecurityToken> GenerateToken(Users userExists)
         {
             var userRoles = userExists.UserRoles.Select(x => x.Role.RoleName).ToList();

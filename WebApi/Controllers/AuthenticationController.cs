@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,13 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var result = await _authService.Login(request);
+            return Ok(result);
+        }
+        [HttpPost("addRoles")]
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> AddRoles(string role)
+        {
+            var result = await _authService.AddRoles(role);
             return Ok(result);
         }
     }

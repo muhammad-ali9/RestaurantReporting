@@ -23,6 +23,15 @@ namespace WebApi.ErrorHandlingMiddleware
                 var response = context.Response;
                 response.ContentType = "application/json";
                 var responseModel = new ApiResponse<string> { Message = ex.Message };
+
+                switch(ex)
+                {
+                    case ApiExceptions e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    default:
+                        break;
+                }
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }
