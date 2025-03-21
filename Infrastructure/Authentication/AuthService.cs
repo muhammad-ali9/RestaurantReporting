@@ -53,16 +53,36 @@ namespace Infrastructure.Authentication
             return response;
         }
 
-        public async Task<ApiResponse<string>> Register(RegisterRequest request)
+        public async Task<ApiResponse<string>> RegisterUser(RegisterRequest request)
         {
             var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email);
 
-            if (!userExists)
+            if (userExists)
             {
                 throw new ApiExceptions($"User with {request.Email} already exists");
             }
+           var user =  new Users
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
+            };
 
-            return new ApiResponse<string>("Suucess");
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            var basicRole = 2;
+                
+                var userRole = new UserRoles
+                {
+                    UserId = user.Id,
+                    RoleId = basicRole
+                };
+            await _context.UserRoles.AddAsync(userRole);
+            await _context.SaveChangesAsync();
+
+            return new ApiResponse<string>("User Added Successfully");
         }
         public async Task<ApiResponse<string>> AddRoles(string roleName)
         {

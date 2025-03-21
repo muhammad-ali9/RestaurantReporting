@@ -28,5 +28,11 @@ namespace WebApi.Controllers
             var result = await _authService.AddRoles(role);
             return Ok(result);
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            var result = await _authService.RegisterUser(request);
+            return Ok(result);
+        }
     }
 }
