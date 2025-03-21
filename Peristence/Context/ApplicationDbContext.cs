@@ -19,6 +19,10 @@ namespace Peristence.Context
         public DbSet<Users> Users { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<Roles> Roles { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<RestaurantSerialNumber> RestaurantSerialNumbers { get; set; }
+
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Authentication
+namespace Infrastructure.Services.Authentication
 {
     public class AuthService : IAuthService
     {

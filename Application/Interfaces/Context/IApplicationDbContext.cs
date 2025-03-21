@@ -13,6 +13,9 @@ namespace Application.Interfaces.Context
         DbSet<Users> Users { get; set; }
         DbSet<UserRoles> UserRoles { get; set; }
         DbSet<Roles> Roles { get; set; }
+        DbSet<Restaurant> Restaurants { get; set; }
+        DbSet<City> Cities { get; set; }
+        DbSet<RestaurantSerialNumber> RestaurantSerialNumbers { get; set; }
         Task<int> SaveChangesAsync();
     }
 }
