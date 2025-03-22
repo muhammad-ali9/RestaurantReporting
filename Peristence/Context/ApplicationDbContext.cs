@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Interfaces.Context;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Peristence.Context
 {
@@ -22,11 +23,13 @@ namespace Peristence.Context
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<RestaurantSerialNumber> RestaurantSerialNumbers { get; set; }
+        public DatabaseFacade Database => base.Database;
 
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

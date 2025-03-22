@@ -1,4 +1,5 @@
 ﻿using Application.Features.Commands.CreateRestaurantCommand;
+using Application.Features.Commands.DeleteCityCommand;
 using Application.Features.Commands.DeleteRestaurantCommand;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,12 @@ namespace WebApi.Controllers
         public async Task<IActionResult> DeleteRestaurants([FromBody] DeleteRestaurantCommand request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+        [HttpDelete("deleteCity")]
+        public async Task<IActionResult> DeleteCity(int id, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new DeleteCityCommand { Cid = id}, cancellationToken);
             return Ok(result);
         }
     }

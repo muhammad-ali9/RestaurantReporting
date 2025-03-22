@@ -11,5 +11,6 @@ namespace Application.Interfaces
     {
         Task<int> CreateRestaurantAsync(CreateRestaurantDto createRestaurant);
         Task<int> DeleteRestauratnAsync(int id);
+        Task<int> DeleteCity(int id);
     }
 }

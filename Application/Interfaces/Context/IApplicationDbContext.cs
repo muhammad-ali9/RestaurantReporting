@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Interfaces.Context
 {
@@ -16,6 +17,8 @@ namespace Application.Interfaces.Context
         DbSet<Restaurant> Restaurants { get; set; }
         DbSet<City> Cities { get; set; }
         DbSet<RestaurantSerialNumber> RestaurantSerialNumbers { get; set; }
+
+        DatabaseFacade Database { get; }
         Task<int> SaveChangesAsync();
     }
 }

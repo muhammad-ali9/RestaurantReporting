@@ -25,6 +25,8 @@ namespace Infrastructure.Services
                 {
                     CityName = createRestaurant.CityName
                 };
+                await _context.Cities.AddAsync(city);
+                await _context.SaveChangesAsync();
             }
 
             var serial = new RestaurantSerialNumber
@@ -47,6 +49,46 @@ namespace Infrastructure.Services
             await _context.SaveChangesAsync();
 
             return serial.Id;
+        }
+
+        public async Task<int> DeleteCity(int id)
+        {
+           var city = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id);
+            if (city == null)
+            {
+                throw new ApiExceptions("City Not Found");
+            }
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+
+                    await _context
+                        .Database
+                        .ExecuteSqlRawAsync("Delete From Restaurants Where SerialNumberId In ( Select Id From RestaurantSerialNumbers Where CityId = {0})", id);
+                    
+                    await _context
+                        .Database
+                        .ExecuteSqlRawAsync("Delete From RestaurantSerialNumbers Where CityId = {0}", id);
+
+                    _context.Cities.Remove(city);
+                    await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new ApiExceptions(ex.Message);
+                }
+            }
+           // _context.Cities.Remove(city);
+           // await _context.SaveChangesAsync();
+
+           //await _context.Database.ExecuteSqlRawAsync("Delete From Restaurants Where SerialNumberId In ( Select Id From RestaurantSerialNumbers Where CityId = {0})", id);
+           // await _context.Database.ExecuteSqlRawAsync("Delete From RestaurantSerialNumbers Where CityId = {0}", id);
+
+            return id;
         }
 
         public async Task<int> DeleteRestauratnAsync(int id)
@@ -72,5 +114,6 @@ namespace Infrastructure.Services
             }
                 return 0;
         }
+
     }
 }
