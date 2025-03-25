@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using MediatR;
 
 namespace Application.Features.Commands.DeleteRestaurantCommand
@@ -17,7 +12,7 @@ namespace Application.Features.Commands.DeleteRestaurantCommand
         }
         public async Task<int> Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
         {
-            var result = await _restauratnService.DeleteRestauratnAsync(request.Id);
+            var result = await _restauratnService.DeleteRestaurantAsync(request.Id);
             return result;
         }
     }

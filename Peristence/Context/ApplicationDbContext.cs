@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces.Context;
+﻿using Application.Interfaces.Context;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -23,6 +18,8 @@ namespace Peristence.Context
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<RestaurantSerialNumber> RestaurantSerialNumbers { get; set; }
+
+        public DbSet<RestaurantTasks> RestaurantTasks { get; set; }
         public DatabaseFacade Database => base.Database;
 
         public async Task<int> SaveChangesAsync()
@@ -70,6 +67,29 @@ namespace Peristence.Context
                 UserId = 1,
                 RoleId = 1
             });
+
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.CreatedByUser)
+                .WithMany(u => u.CreatedTasks)
+                .HasForeignKey(rt => rt.CreatedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.ModifiedByUser)
+                .WithMany(u => u.ModifiedTasks)
+                .HasForeignKey(rt => rt.ModifiedBy);
+
+            modelBuilder.Entity<RestaurantSerialNumber>()
+                .HasOne(rs => rs.City)
+                .WithMany(c => c.SerialNumbers)
+                .HasForeignKey(rs => rs.CityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.City)
+                .WithMany(c => c.RestaurantTasks)
+                .HasForeignKey(rt => rt.CityId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

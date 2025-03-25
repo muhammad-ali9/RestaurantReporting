@@ -3,7 +3,6 @@ using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Context;
 using Domain;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services
@@ -28,6 +27,7 @@ namespace Infrastructure.Services
                 await _context.Cities.AddAsync(city);
                 await _context.SaveChangesAsync();
             }
+            
 
             var serial = new RestaurantSerialNumber
             {
@@ -91,7 +91,7 @@ namespace Infrastructure.Services
             return id;
         }
 
-        public async Task<int> DeleteRestauratnAsync(int id)
+        public async Task<int> DeleteRestaurantAsync(int id)
         {
             var restaurant = await _context.Restaurants
                 .Include(r => r.SerialNumber)

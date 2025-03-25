@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UI.ServiceExtension;
+using Application.Interfaces;
+using WebApi.SharedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExtension();
@@ -36,6 +39,8 @@ builder.Services.AddAuthentication(opt =>
         ValidAudience = builder.Configuration["JwtSettings:Audience"],
     };
 });
+
+builder.Services.AddScoped<ILoggedInUser, LoggedInUser>();
 
 
 var app = builder.Build();

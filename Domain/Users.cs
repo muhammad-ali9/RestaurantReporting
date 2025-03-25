@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Common;
+﻿using Domain.Common;
 
 namespace Domain
 {
@@ -16,5 +11,7 @@ namespace Domain
 
         //Navigation properties
         public virtual ICollection<UserRoles> UserRoles { get; set; }
+        public ICollection<RestaurantTasks> CreatedTasks { get; set; }
+        public ICollection<RestaurantTasks> ModifiedTasks { get; set; }
     }
 }

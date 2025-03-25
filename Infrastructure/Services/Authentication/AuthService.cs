@@ -7,8 +7,6 @@ using Application.Interfaces.Authentication;
 using Application.Interfaces.Context;
 using Application.Response;
 using Domain;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

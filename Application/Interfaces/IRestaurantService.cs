@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs;
+﻿using Application.DTOs;
 
 namespace Application.Interfaces
 {
     public interface IRestaurantService
     {
         Task<int> CreateRestaurantAsync(CreateRestaurantDto createRestaurant);
-        Task<int> DeleteRestauratnAsync(int id);
+        Task<int> DeleteRestaurantAsync(int id);
         Task<int> DeleteCity(int id);
     }
 }
