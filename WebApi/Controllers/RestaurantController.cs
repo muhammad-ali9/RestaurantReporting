@@ -2,6 +2,7 @@
 using Application.Features.Commands.DeleteCityCommand;
 using Application.Features.Commands.DeleteRestaurantCommand;
 using Application.Features.Commands.RestaurantTaskCommand;
+using Application.Features.Queries.GetSerialNoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,12 @@ namespace WebApi.Controllers
         public async Task<IActionResult> CreateRestaurantTask([FromBody] CreateRestaurantTaskCommand request, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(request, cancellationToken);
+            return Ok(result);
+        }
+        [HttpGet("GetSerialNo")]
+        public async Task<IActionResult> GetSerialNo(int id)
+        {
+            var result = await _mediator.Send(new GetSerialNoQuery { CityId = id });
             return Ok(result);
         }
     }

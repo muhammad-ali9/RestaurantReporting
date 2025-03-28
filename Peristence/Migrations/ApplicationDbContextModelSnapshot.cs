@@ -114,12 +114,8 @@ namespace Peristence.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RestaurantSerialNumberId")
+                    b.Property<int>("SerialNoId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SerialNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -129,7 +125,7 @@ namespace Peristence.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.HasIndex("RestaurantSerialNumberId");
+                    b.HasIndex("SerialNoId");
 
                     b.ToTable("RestaurantTasks");
                 });
@@ -215,7 +211,7 @@ namespace Peristence.Migrations
                             Email = "superadmin@gmail.com",
                             FirstName = "Muhammad",
                             LastName = "Ali",
-                            Password = "$2a$11$MksMyB10ayZe.7rZZStu1OXBmv2CLVR65RD.t5SwuDQUavWJDdII2"
+                            Password = "$2a$11$DV9Y1ZuMgW/nbxa0tywPAeGtycaRFJJ.mulAVX3rb8ECQuuhMfQsy"
                         });
                 });
 
@@ -257,17 +253,22 @@ namespace Peristence.Migrations
 
                     b.HasOne("Domain.Users", "ModifiedByUser")
                         .WithMany("ModifiedTasks")
-                        .HasForeignKey("ModifiedBy");
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Domain.RestaurantSerialNumber", null)
+                    b.HasOne("Domain.RestaurantSerialNumber", "RestaurantSerialNumber")
                         .WithMany("RestaurantTasks")
-                        .HasForeignKey("RestaurantSerialNumberId");
+                        .HasForeignKey("SerialNoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("City");
 
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
+
+                    b.Navigation("RestaurantSerialNumber");
                 });
 
             modelBuilder.Entity("Domain.UserRoles", b =>

@@ -27,7 +27,7 @@ namespace Infrastructure.Services
                 await _context.Cities.AddAsync(city);
                 await _context.SaveChangesAsync();
             }
-            
+
 
             var serial = new RestaurantSerialNumber
             {
@@ -51,9 +51,9 @@ namespace Infrastructure.Services
             return serial.Id;
         }
 
-        public async Task<int> DeleteCity(int id)
+        public async Task<int> DeleteCityAsync(int id)
         {
-           var city = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id);
+            var city = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id);
             if (city == null)
             {
                 throw new ApiExceptions("City Not Found");
@@ -66,7 +66,7 @@ namespace Infrastructure.Services
                     await _context
                         .Database
                         .ExecuteSqlRawAsync("Delete From Restaurants Where SerialNumberId In ( Select Id From RestaurantSerialNumbers Where CityId = {0})", id);
-                    
+
                     await _context
                         .Database
                         .ExecuteSqlRawAsync("Delete From RestaurantSerialNumbers Where CityId = {0}", id);
@@ -82,11 +82,11 @@ namespace Infrastructure.Services
                     throw new ApiExceptions(ex.Message);
                 }
             }
-           // _context.Cities.Remove(city);
-           // await _context.SaveChangesAsync();
+            // _context.Cities.Remove(city);
+            // await _context.SaveChangesAsync();
 
-           //await _context.Database.ExecuteSqlRawAsync("Delete From Restaurants Where SerialNumberId In ( Select Id From RestaurantSerialNumbers Where CityId = {0})", id);
-           // await _context.Database.ExecuteSqlRawAsync("Delete From RestaurantSerialNumbers Where CityId = {0}", id);
+            //await _context.Database.ExecuteSqlRawAsync("Delete From Restaurants Where SerialNumberId In ( Select Id From RestaurantSerialNumbers Where CityId = {0})", id);
+            // await _context.Database.ExecuteSqlRawAsync("Delete From RestaurantSerialNumbers Where CityId = {0}", id);
 
             return id;
         }
@@ -112,8 +112,14 @@ namespace Infrastructure.Services
             {
                 throw new ApiExceptions("Restaurant Not Found");
             }
-                return 0;
+            return 0;
         }
 
+        public async Task<List<RestaurantSerialDto>> GetSerialNumberAsync(int id)
+        {
+            var serialNumbers = await _context.RestaurantSerialNumbers.Where(x => x.CityId == id).Select(x => new RestaurantSerialDto { SerialNo = x.SerialNumber}).ToListAsync();
+
+            return serialNumbers;
+        }
     }
 }

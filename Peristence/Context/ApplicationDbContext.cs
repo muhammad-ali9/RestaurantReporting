@@ -29,6 +29,31 @@ namespace Peristence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure RestaurantSerialNumber relationship
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.RestaurantSerialNumber)
+                .WithMany(rsn => rsn.RestaurantTasks)
+                .HasForeignKey(rt => rt.SerialNoId)
+                .OnDelete(DeleteBehavior.NoAction); // Prevents cascade issues
+
+            // Configure other relationships similarly
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.City)
+                .WithMany()
+                .HasForeignKey(rt => rt.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.CreatedByUser)
+                .WithMany()
+                .HasForeignKey(rt => rt.CreatedBy)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RestaurantTasks>()
+                .HasOne(rt => rt.ModifiedByUser)
+                .WithMany()
+                .HasForeignKey(rt => rt.ModifiedBy)
+                .OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserRoles>()

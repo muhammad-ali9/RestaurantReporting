@@ -15,8 +15,8 @@ namespace Application.Features.Commands.RestaurantTaskCommand
         }
         public async Task<int> Handle(CreateRestaurantTaskCommand request, CancellationToken cancellationToken)
         {
-            var data = _mapper.Map<Domain.RestaurantTasks>(request.RestaurantTasks);
-            var result = await _restaurantTask.CreateRestaurantTaskAsync(data);
+
+            var result = await _restaurantTask.CreateRestaurantTaskAsync(request.RestaurantTasks);
             return 1;
         }
     }

@@ -10,8 +10,8 @@ namespace Application.Mappings
         public MappingProfile()
         {
             CreateMap<CreateRestaurantCommand, CreateRestaurantDto>().ReverseMap();
-            CreateMap<CreateRestaurantDto, CreateRestaurantCommand>().ReverseMap();
-            CreateMap<RestaurantTasksDto, RestaurantTasks>().ReverseMap();
+            //CreateMap<CreateRestaurantDto, CreateRestaurantCommand>().ReverseMap();
+            //CreateMap<RestaurantTasksDto, RestaurantTasks>().ReverseMap();
         }
     }
 }

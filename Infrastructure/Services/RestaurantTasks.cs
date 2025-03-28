@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Application.Interfaces.Context;
 
 namespace Infrastructure.Services
@@ -13,9 +14,19 @@ namespace Infrastructure.Services
         }
      
 
-        public Task<int> CreateRestaurantTaskAsync(Domain.RestaurantTasks restaurantTask)
+        public async Task<int> CreateRestaurantTaskAsync(RestaurantTasksDto restaurantTask)
         {
-            throw new NotImplementedException();
+            var result = new Domain.RestaurantTasks()
+            {
+                SerialNoId = restaurantTask.SerialNo,
+                FormId = restaurantTask.FormId,
+                CityId = restaurantTask.CityId,
+                CreatedBy = restaurantTask.CreatedBy
+
+            };
+            await _context.RestaurantTasks.AddAsync(result);
+            await _context.SaveChangesAsync();
+            return result.Id;
         }
     }
 }

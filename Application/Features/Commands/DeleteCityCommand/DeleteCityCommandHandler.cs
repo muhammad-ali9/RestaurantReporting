@@ -12,7 +12,7 @@ namespace Application.Features.Commands.DeleteCityCommand
         }
         public async Task<int> Handle(DeleteCityCommand request, CancellationToken cancellationToken)
         {
-            var result = await _restaurantService.DeleteCity(request.Cid);
+            var result = await _restaurantService.DeleteCityAsync(request.Cid);
             return result;
         }
     }

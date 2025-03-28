@@ -1,9 +1,9 @@
-﻿using Domain;
+﻿using Application.DTOs;
 
 namespace Application.Interfaces
 {
     public interface IRestaurantTasks
     {
-        Task<int> CreateRestaurantTaskAsync(RestaurantTasks restaurantTask);
+        Task<int> CreateRestaurantTaskAsync(RestaurantTasksDto restaurantTask);
     }
 }

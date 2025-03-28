@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Domain;
 
 namespace Application.Interfaces
 {
@@ -6,6 +7,7 @@ namespace Application.Interfaces
     {
         Task<int> CreateRestaurantAsync(CreateRestaurantDto createRestaurant);
         Task<int> DeleteRestaurantAsync(int id);
-        Task<int> DeleteCity(int id);
+        Task<int> DeleteCityAsync(int id);
+        Task<List<RestaurantSerialDto>> GetSerialNumberAsync(int id);
     }
 }
