@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Peristence.Context;
 
@@ -11,9 +12,11 @@ using Peristence.Context;
 namespace Peristence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250328204749_SerialNumberRelationShipUpdate")]
+    partial class SerialNumberRelationShipUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,7 +214,7 @@ namespace Peristence.Migrations
                             Email = "superadmin@gmail.com",
                             FirstName = "Muhammad",
                             LastName = "Ali",
-                            Password = "$2a$11$WUSY3Zx6iYgRopKoPXhp8.yO071Xk25Y3s1p8XMTaVOXsF4QBpqrC"
+                            Password = "$2a$11$ZXA6g3XeOvAOJXP.Cp5hxeyBJ55glHkcQbcJMrDCEQiaKLNQW81tS"
                         });
                 });
 

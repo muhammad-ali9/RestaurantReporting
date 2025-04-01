@@ -5,5 +5,6 @@ namespace Application.Interfaces
     public interface IRestaurantTasks
     {
         Task<int> CreateRestaurantTaskAsync(RestaurantTasksDto restaurantTask);
+        Task<List<UsersTaskDto>> GetUserTasksAsync();
     }
 }

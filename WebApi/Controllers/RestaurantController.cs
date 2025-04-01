@@ -2,6 +2,7 @@
 using Application.Features.Commands.DeleteCityCommand;
 using Application.Features.Commands.DeleteRestaurantCommand;
 using Application.Features.Commands.RestaurantTaskCommand;
+using Application.Features.Queries.GetAllCitiesQuery;
 using Application.Features.Queries.GetSerialNoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +53,12 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetSerialNo(int id)
         {
             var result = await _mediator.Send(new GetSerialNoQuery { CityId = id });
+            return Ok(result);
+        }
+        [HttpGet("GetAllCities")]
+        public async Task<IActionResult> GetAllCities([FromQuery] GetAllCitiesQuery getAllCitiesQuery, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(getAllCitiesQuery, cancellationToken);
             return Ok(result);
         }
     }

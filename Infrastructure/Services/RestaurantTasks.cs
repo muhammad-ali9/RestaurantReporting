@@ -7,12 +7,14 @@ namespace Infrastructure.Services
     public class RestaurantTasks : IRestaurantTasks
     {
         private readonly IApplicationDbContext _context;
+        private readonly ILoggedInUser _loggedInUser;
 
-        public RestaurantTasks(IApplicationDbContext context)
+        public RestaurantTasks(IApplicationDbContext context, ILoggedInUser loggedInUser)
         {
             _context = context;
+            _loggedInUser = loggedInUser;
         }
-     
+
 
         public async Task<int> CreateRestaurantTaskAsync(RestaurantTasksDto restaurantTask)
         {
@@ -21,7 +23,7 @@ namespace Infrastructure.Services
                 SerialNoId = restaurantTask.SerialNo,
                 FormId = restaurantTask.FormId,
                 CityId = restaurantTask.CityId,
-                CreatedBy = restaurantTask.CreatedBy
+                CreatedBy = (int)Convert.ToInt64(_loggedInUser.UserId)
 
             };
             await _context.RestaurantTasks.AddAsync(result);

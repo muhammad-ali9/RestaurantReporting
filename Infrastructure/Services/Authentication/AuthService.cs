@@ -95,7 +95,7 @@ namespace Infrastructure.Services.Authentication
             };
             await _context.Roles.AddAsync(newRole);
             await _context.SaveChangesAsync();
-            return new ApiResponse<string>("Role Added Successfully");
+            return new ApiResponse<string>(newRole.RoleName, "Role Added Successfully");
         }
         private async Task<JwtSecurityToken> GenerateToken(Users userExists)
         {

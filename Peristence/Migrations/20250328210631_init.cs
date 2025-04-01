@@ -130,7 +130,8 @@ namespace Peristence.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<int>(type: "int", nullable: true)
+                    ModifiedBy = table.Column<int>(type: "int", nullable: true),
+                    RestaurantSerialNumberId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,10 +143,11 @@ namespace Peristence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RestaurantTasks_RestaurantSerialNumbers_SerialNoId",
-                        column: x => x.SerialNoId,
+                        name: "FK_RestaurantTasks_RestaurantSerialNumbers_RestaurantSerialNumberId",
+                        column: x => x.RestaurantSerialNumberId,
                         principalTable: "RestaurantSerialNumbers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RestaurantTasks_Users_CreatedBy",
                         column: x => x.CreatedBy,
@@ -167,7 +169,7 @@ namespace Peristence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "LastName", "Password" },
-                values: new object[] { 1, "superadmin@gmail.com", "Muhammad", "Ali", "$2a$11$DV9Y1ZuMgW/nbxa0tywPAeGtycaRFJJ.mulAVX3rb8ECQuuhMfQsy" });
+                values: new object[] { 1, "superadmin@gmail.com", "Muhammad", "Ali", "$2a$11$LGRIBCjgw1E9qcLvTphJsOK6itynu.8cfgQNIrAdWIz5IgPOHqAUW" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -201,9 +203,9 @@ namespace Peristence.Migrations
                 column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RestaurantTasks_SerialNoId",
+                name: "IX_RestaurantTasks_RestaurantSerialNumberId",
                 table: "RestaurantTasks",
-                column: "SerialNoId");
+                column: "RestaurantSerialNumberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",

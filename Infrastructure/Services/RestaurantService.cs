@@ -115,11 +115,19 @@ namespace Infrastructure.Services
             return 0;
         }
 
+        public async Task<List<string>> GetAllCitiesAsync()
+        {
+            var cities = await _context.Cities.Select(c => c.CityName ).ToListAsync();
+            return cities;
+        }
+       
         public async Task<List<RestaurantSerialDto>> GetSerialNumberAsync(int id)
         {
             var serialNumbers = await _context.RestaurantSerialNumbers.Where(x => x.CityId == id).Select(x => new RestaurantSerialDto { SerialNo = x.SerialNumber}).ToListAsync();
 
             return serialNumbers;
         }
+
+     
     }
 }

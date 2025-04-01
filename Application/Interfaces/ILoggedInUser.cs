@@ -1,6 +1,6 @@
 ﻿namespace Application.Interfaces
 {
-   public class ILoggedInUser
+   public interface ILoggedInUser
     {
          string UserId { get; set; }
     }

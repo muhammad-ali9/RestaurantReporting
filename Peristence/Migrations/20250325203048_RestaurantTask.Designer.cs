@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Peristence.Context;
 
@@ -11,9 +12,11 @@ using Peristence.Context;
 namespace Peristence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250325203048_RestaurantTask")]
+    partial class RestaurantTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,8 +117,12 @@ namespace Peristence.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RestaurantSerialNumberId")
+                    b.Property<int?>("RestaurantSerialNumberId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SerialNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -211,7 +218,7 @@ namespace Peristence.Migrations
                             Email = "superadmin@gmail.com",
                             FirstName = "Muhammad",
                             LastName = "Ali",
-                            Password = "$2a$11$WUSY3Zx6iYgRopKoPXhp8.yO071Xk25Y3s1p8XMTaVOXsF4QBpqrC"
+                            Password = "$2a$11$MksMyB10ayZe.7rZZStu1OXBmv2CLVR65RD.t5SwuDQUavWJDdII2"
                         });
                 });
 
@@ -255,19 +262,15 @@ namespace Peristence.Migrations
                         .WithMany("ModifiedTasks")
                         .HasForeignKey("ModifiedBy");
 
-                    b.HasOne("Domain.RestaurantSerialNumber", "RestaurantSerialNumber")
+                    b.HasOne("Domain.RestaurantSerialNumber", null)
                         .WithMany("RestaurantTasks")
-                        .HasForeignKey("RestaurantSerialNumberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantSerialNumberId");
 
                     b.Navigation("City");
 
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("ModifiedByUser");
-
-                    b.Navigation("RestaurantSerialNumber");
                 });
 
             modelBuilder.Entity("Domain.UserRoles", b =>

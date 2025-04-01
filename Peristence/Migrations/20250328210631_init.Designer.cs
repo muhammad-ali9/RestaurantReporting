@@ -12,7 +12,7 @@ using Peristence.Context;
 namespace Peristence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250328211137_init")]
+    [Migration("20250328210631_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -117,6 +117,9 @@ namespace Peristence.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("RestaurantSerialNumberId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SerialNoId")
                         .HasColumnType("int");
 
@@ -128,7 +131,7 @@ namespace Peristence.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.HasIndex("SerialNoId");
+                    b.HasIndex("RestaurantSerialNumberId");
 
                     b.ToTable("RestaurantTasks");
                 });
@@ -214,7 +217,7 @@ namespace Peristence.Migrations
                             Email = "superadmin@gmail.com",
                             FirstName = "Muhammad",
                             LastName = "Ali",
-                            Password = "$2a$11$DV9Y1ZuMgW/nbxa0tywPAeGtycaRFJJ.mulAVX3rb8ECQuuhMfQsy"
+                            Password = "$2a$11$LGRIBCjgw1E9qcLvTphJsOK6itynu.8cfgQNIrAdWIz5IgPOHqAUW"
                         });
                 });
 
@@ -256,13 +259,12 @@ namespace Peristence.Migrations
 
                     b.HasOne("Domain.Users", "ModifiedByUser")
                         .WithMany("ModifiedTasks")
-                        .HasForeignKey("ModifiedBy")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ModifiedBy");
 
                     b.HasOne("Domain.RestaurantSerialNumber", "RestaurantSerialNumber")
                         .WithMany("RestaurantTasks")
-                        .HasForeignKey("SerialNoId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("RestaurantSerialNumberId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
