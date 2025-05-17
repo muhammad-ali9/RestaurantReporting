@@ -30,5 +30,10 @@ namespace Infrastructure.Services
             await _context.SaveChangesAsync();
             return result.Id;
         }
+
+        public Task<List<UsersTaskDto>> GetUserTasksAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
