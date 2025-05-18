@@ -4,6 +4,7 @@ using Application.Features.Commands.DeleteRestaurantCommand;
 using Application.Features.Commands.RestaurantTaskCommand;
 using Application.Features.Queries.GetAllCitiesQuery;
 using Application.Features.Queries.GetSerialNoQuery;
+using Application.Features.Queries.GetUserTasksQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,5 +62,12 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(getAllCitiesQuery, cancellationToken);
             return Ok(result);
         }
+        [HttpGet("GetUserTasks")]
+        public async Task<IActionResult> GetUserTasks()
+        {
+            var result = await _mediator.Send(new GetUserTasksQuery());
+            return Ok(result);
+        }
+
     }
 }

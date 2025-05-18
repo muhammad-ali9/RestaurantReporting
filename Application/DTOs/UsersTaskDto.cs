@@ -7,5 +7,6 @@
         public string CityName { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string  FullName { get; set; }
     }
 }
