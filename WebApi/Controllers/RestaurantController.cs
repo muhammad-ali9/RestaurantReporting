@@ -63,6 +63,7 @@ namespace WebApi.Controllers
             return Ok(result);
         }
         [HttpGet("GetUserTasks")]
+        [Authorize(Roles = "SuperAdmin, Inspector")]
         public async Task<IActionResult> GetUserTasks()
         {
             var result = await _mediator.Send(new GetUserTasksQuery());

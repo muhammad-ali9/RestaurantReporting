@@ -46,16 +46,16 @@ builder.Services.AddScoped<ILoggedInUser, LoggedInUser>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.MapControllers();
-
+app.Urls.Add("http://0.0.0.0:8080");
 app.Run();
