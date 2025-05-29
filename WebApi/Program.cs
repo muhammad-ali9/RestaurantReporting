@@ -57,5 +57,5 @@ var app = builder.Build();
 app.UseAuthorization();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.MapControllers();
-app.Urls.Add("http://0.0.0.0:8080");
+//app.Urls.Add("http://0.0.0.0:8080");
 app.Run();

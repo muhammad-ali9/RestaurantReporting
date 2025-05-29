@@ -15,6 +15,7 @@ namespace Infrastructure
             services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRestaurantTasks, RestaurantTasks>();
+            services.AddMemoryCache();
 
             return services;
         }
