@@ -11,7 +11,14 @@ This project is built using **.NET 8 Web API** with **Clean Architecture** princ
 - **AutoMapper**: Automatically maps objects between layers to reduce the need for manual mapping code.
 - **FluentValidation**: Provides an easy and fluent interface for building validation rules for models.
 - **EF Core 8.0.14**: Entity Framework Core is used as the ORM for data access, with version 8.0.14 for the latest improvements and features.
+- **LINQ** Query for fetching Data.
+- **Parameterize SQL Queries** to enhance the security of the App to protect from SQL injections.
+- **Raw SQL Queries** implemented for complex queries.
+- **SQL Transaction** for data integrity.
 - **JWT Token Authentication**: Secure the API with **JSON Web Tokens (JWT)** for authenticating and authorizing users.
+- **Role-Base Authentication** to access resources.
+- **Docker** for easy deployment.
+- **Caching** (In-Memory) for performance enhancement.
 
 ## Features
 
